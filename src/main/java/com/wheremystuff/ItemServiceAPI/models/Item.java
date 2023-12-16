@@ -3,7 +3,6 @@ package com.wheremystuff.ItemServiceAPI.models;
 import com.wheremystuff.ItemServiceAPI.dto.models.ItemDTO;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

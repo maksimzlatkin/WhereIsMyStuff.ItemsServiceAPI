@@ -1,0 +1,17 @@
+[
+  {
+    "id" : 1,
+    "name" : "Dishes",
+    "description" : "Silverware for making and consuming foods."
+  },
+  {
+    "id" : 2,
+    "name" : "Decoration",
+    "description" : "Unique items that give life to rooms."
+  },
+  {
+    "id" : 3,
+    "name" : "Clothing",
+    "description" : "What people wear."
+  }
+]

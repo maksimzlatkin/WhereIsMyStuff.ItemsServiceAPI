@@ -1,37 +1,41 @@
 package com.wheremystuff.ItemServiceAPI.repository;
 
 import com.wheremystuff.ItemServiceAPI.dto.models.ItemDTO;
+import com.wheremystuff.ItemServiceAPI.dto.models.ItemTypeDTO;
 import com.wheremystuff.ItemServiceAPI.models.Item;
+import com.wheremystuff.ItemServiceAPI.models.ItemType;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
-import java.io.*;
-import java.time.LocalDateTime;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
-public class ItemRepositoryImplementation implements ItemRepository {
+@Component
+public class TypeRepositoryImplementation implements TypeRepository {
 
-    public List<Item> findAll() {
+    public List<ItemType> findAll() {
         JSONParser parser = new JSONParser();
         try {
-            JSONArray arr = (JSONArray) parser.parse(new FileReader("./src/main/resources/static/items.json"));
+            JSONArray arr = (JSONArray) parser.parse(new FileReader("./src/main/resources/static/types.json"));
 
-            List<Item> items = new ArrayList<Item>();
+            List<ItemType> types = new ArrayList<ItemType>();
 
             for (Object o : arr) {
                 JSONObject i = (JSONObject) o;
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
-                items.add(new Item(Math.toIntExact((long) i.get("id")), (String) i.get("name"), (String) i.get("type"), (String) i.get("description"),
-                        LocalDateTime.parse((String) i.get("created_date"), formatter), (String) i.get("name")));
+                types.add(new ItemType(Math.toIntExact((long) i.get("id")), (String) i.get("name"), (String) i.get("description")));
             }
-            return items;
+            return types;
         }
         catch (FileNotFoundException e) {
             System.out.println(e.toString());
@@ -47,37 +51,29 @@ public class ItemRepositoryImplementation implements ItemRepository {
         }
     }
 
-    public Item findOne(int id) {
-        List<Item> items = findAll();
-//        for (int i = 0; i < items.size(); i++){
-//            if (items.get(i).getId() == id) {
-//                return items.get(i);
-//            }
-//        }
+    public ItemType findOne(int id) {
+        List<ItemType> types = findAll();
 
-        for (Item item: items) {
-            if (item.getId() == id)
-                return item;
+        for (ItemType type: types) {
+            if (type.getId() == id)
+                return type;
         }
         return null;
     }
 
     @Override
-    public void createItem(ItemDTO itemDTO) {
+    public void createItem(ItemTypeDTO itemTypeDTO) {
         JSONParser parser = new JSONParser();
         try {
-            JSONArray arr = (JSONArray) parser.parse(new FileReader("./src/main/resources/static/items.json"));
+            JSONArray arr = (JSONArray) parser.parse(new FileReader("./src/main/resources/static/types.json"));
 
             JSONObject newItem = new JSONObject();
-            newItem.put("id", itemDTO.getId());
-            newItem.put("name", itemDTO.getName());
-            newItem.put("type", itemDTO.getType());
-            newItem.put("description", itemDTO.getDescription());
-            newItem.put("created_date", itemDTO.getCreated_date());
-            newItem.put("color", itemDTO.getColor());
+            newItem.put("id", itemTypeDTO.getDescription());
+            newItem.put("name", itemTypeDTO.getName());
+            newItem.put("description", itemTypeDTO.getDescription());
 
             arr.add(newItem);
-            FileWriter file = new FileWriter("./src/main/resources/static/items.json");
+            FileWriter file = new FileWriter("./src/main/resources/static/types.json");
             file.write(arr.toJSONString());
             file.flush();
         }
@@ -97,7 +93,7 @@ public class ItemRepositoryImplementation implements ItemRepository {
     public void deleteItem(int id) {
         JSONParser parser = new JSONParser();
         try {
-            JSONArray arr = (JSONArray) parser.parse(new FileReader("./src/main/resources/static/items.json"));
+            JSONArray arr = (JSONArray) parser.parse(new FileReader("./src/main/resources/static/types.json"));
 
             for (Object o : arr) {
                 JSONObject i = (JSONObject) o;
@@ -107,7 +103,7 @@ public class ItemRepositoryImplementation implements ItemRepository {
                 }
             }
 
-            FileWriter file = new FileWriter("./src/main/resources/static/items.json");
+            FileWriter file = new FileWriter("./src/main/resources/static/types.json");
             file.write(arr.toJSONString());
             file.flush();
         }

@@ -1,11 +1,9 @@
 package com.wheremystuff.ItemServiceAPI.controllers;
 
 import com.wheremystuff.ItemServiceAPI.dto.models.ItemDTO;
-import com.wheremystuff.ItemServiceAPI.models.Item;
 import com.wheremystuff.ItemServiceAPI.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
