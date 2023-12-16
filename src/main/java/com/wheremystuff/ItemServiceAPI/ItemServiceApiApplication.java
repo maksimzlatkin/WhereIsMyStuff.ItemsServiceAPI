@@ -14,9 +14,4 @@ public class ItemServiceApiApplication {
 		SpringApplication.run(ItemServiceApiApplication.class, args);
 	}
 
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
-
 }
